@@ -1,0 +1,104 @@
+    {% extends 'main_base.html' %}
+
+    {% block content %}
+
+
+    {%load static %}
+    <style>
+        .progress-bar {
+            transition: width 1s;
+        }
+    </style>
+    <div class="container-fluid">
+
+     <h1>Tickets</h1>
+     <div class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+        <div style='color: {% if message.tags == "error" %}
+        red
+        {% elif message.tags == "success" %}
+        green
+        {% else %}black{% endif %};'>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<a href="{% url 'tickets:ticket_create_url' %}" class="btn btn-primary">Create Ticket</a>
+<a href="{% url 'tickets:export_tickets_to_excel' %}" class="btn btn-primary">Export to Excell</a>
+<table class="table-responsive container-md">
+    <thead>
+        <tr>
+            <th class="center">
+                <label>
+                    <input type="checkbox" />
+                    <span class="lbl"></span>
+                </label>
+            </th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Date Created</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    {% if tickets %}
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td class="center">
+                <label>
+                    <input type="checkbox" name="reminder_ids" value="{{ reminder.id }}"/>
+                    <span class="lbl"></span>
+                </label>
+            </td>
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.description }}</td>
+            <td>{{ ticket.user.employee_name }}</td>
+            <td>{{ ticket.user.department }}</td>
+            <td>{{ ticket.created_at }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>
+                <div class="col"> 
+
+                    <span>
+                        {% if ticket.status == 'open' and user.is_staff %}
+                        <a href="{% url 'tickets:ticket_detail_url' ticket.id %}" class="btn btn-success btn-sm">Close</a>
+                        {% endif %}
+                    </span>
+                    <span>
+                        <a href="{% url 'tickets:update_item_url' ticket.id %}">
+                            <button class="btn btn-sm btn-info">
+                                <i class="icon-pencil bigger-250"></i>
+                            </button> 
+                        </a>
+                    </span>
+                    <span>
+                        <a  href="{% url 'tickets:delete_item_url' ticket.id %}">
+                            <button class="btn btn-sm btn-danger">
+                                <i class="icon-trash bigger-250"></i> 
+                            </button> 
+                        </a>
+                    </span>
+
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+    </tbody>
+    {% else %}
+    <p>You don't have any tickets yet.</p>
+    {% endif %}
+
+</table>
+</div>
+
+{% endblock %}

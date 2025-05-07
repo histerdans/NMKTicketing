@@ -1,0 +1,42 @@
+.login_body_layout{margin: 0; padding: 0;
+ font-family: Arial, sans-serif;
+  background: #fffef2;
+   display: flex;
+    justify-content: center;
+     align-items: center;
+      height: 100vh;
+}
+ .login_container{
+ width: 800px;
+  display: flex;
+   background: white;
+    border-radius: 8px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+ }
+ .lable_input_container{
+ margin-bottom: 15px;
+ }
+ .login_lable{
+ display: block;
+  margin-bottom: 5px;
+   color: #555;
+ }
+ .login_input{
+ width: 100%;
+  padding: 10px;
+   border: 1px solid #ccc;
+    border-radius: 4px;
+ }
+ .login_img{
+
+ width: 50%;
+  background: #E8EAF6;
+   display: flex; justify-content: center;
+    align-items: center;
+     border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      }
+.messages{
+color:red
+}

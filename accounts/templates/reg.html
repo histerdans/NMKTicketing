@@ -1,0 +1,38 @@
+{% extends 'index_base.html' %}
+
+{% block content %}
+
+
+{%load static %}
+{% load crispy_forms_tags %}
+<div class="col-md-12 themed-grid-col" style="margin-top:380px">
+     <a class="navbar-brand" href="/">
+          <!-- Logo with illumination -->
+          <img src="{% static 'img/nmklogo_w.png' %}" width="220" height="60" alt="Home" class="d-inline-block align-text-top logo-glow">
+      </a>
+    <h1 style="text-align: center; margin-bottom: 20px;">User Registration</h1>
+    <div class="col">
+        
+        <div class="b-example-divider"></div>
+        <form id="register_form" action="{% url 'accounts:register' %}" method="POST">
+            {% csrf_token %}
+
+            {{form|crispy}}
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button class="btn btn-primary" type="submit">Register</button>
+          </div>
+
+      </form>
+      <!-- Display success messages -->
+      <div class="d-inline-flex p-2 bd-highlight">Already Have An Account? <a href="{% url 'accounts:login' %}"
+        style="color: #fff;
+        te"><u>Login</u> </a>
+    </div>
+</div>
+</div>
+
+<!--PAGE CONTENT ENDS-->
+
+
+{% endblock %}

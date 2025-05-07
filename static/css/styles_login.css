@@ -1,0 +1,181 @@
+  /* Centering and layout adjustments for full-page content */
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* Navbar adjustments for centered elements */
+.navbar {
+    width: 100%;
+}
+
+/* Helpdesk container centering */
+.helpdesk-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Card centering in a row */
+.row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Card styling adjustments for a centered, consistent layout */
+.card {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .container-fluid {
+      padding: 0 20px;
+  }
+}
+}
+/* Heading styling */
+h1 {
+    color: #6200EE;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* Form input styling */
+input, select {
+    border-radius: 30px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+/* Button styling */
+button {
+    background-color: #6200EE;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 30px;
+    width: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4d00ba;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #222;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+.navbar-nav .nav-link:hover {
+    color: orange;
+    transition: color 0.3s ease;
+}
+
+/* Illuminating effect for the logo on hover */
+.navbar-brand:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 165, 0, 1));
+}
+/* Transparent navbar background */
+.navbar {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Change navbar background on scroll */
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Hover effect on nav links */
+.nav-hover:hover {
+    color: #ff4d4d !important; /* Change text color on hover */
+    transition: color 0.3s ease;
+}
+
+/* Glow effect for logo */
+.logo-glow {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Increase glow on hover */
+.logo-glow:hover {
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+}
+/* Add border and background to nav links */
+.nav-custom {
+    border: 1px solid #000; /* black border */
+    background-color: rgba(255, 165, 0, 0.2); /* transparent orange background */
+    border-radius: 5px;
+    padding: 8px 15px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Change background color and border on hover */
+.nav-custom:hover {
+    background-color: rgba(255, 165, 0, 0.4);
+    border-color: #ff9800;
+}
+
+/* Align the logo and nav-links */
+.navbar-nav {
+    margin-left: auto; /* Push nav links to the right */
+}
+
+.navbar-brand {
+    margin-right: auto; /* Keep logo on the left */
+}
+
+.logo-glow {
+    filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.8)); /* Add illumination effect to logo */
+}
+
+
+
+/* Responsive adjustments for mobile */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        justify-content: flex-end; /* Ensure nav-links are aligned right on mobile */
+    }
+}

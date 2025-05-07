@@ -1,0 +1,118 @@
+{% extends 'main_base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+    .small-card {
+        width: 80%; /* Adjust as needed */
+        margin: 0 auto; /* Center the card */
+        padding: 1rem; /* Adjust padding as needed */
+    }
+
+    #categoryChart {
+        max-width: 100%; /* Ensure the chart fits inside the card */
+        height: auto; /* Maintain aspect ratio */
+    }
+</style>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">ICT Dashboard</h1>
+
+    <!-- Total Closed Tickets -->
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">Total Closed Tickets</h3>
+                    <p class="display-4">{{ closed_tickets }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Categories Pie Chart -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card small-card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Ticket Categories</h4>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Monthly Report Link -->
+    <!-- Button to trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reportModal">
+        Generate Monthly Report
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">Select Month and Year</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reportForm" action="{% url 'tickets:generate_report' %}" method="get">
+                        <div class="mb-3">
+                            <label for="month" class="form-label">Month</label>
+                            <select class="form-select" id="month" name="month" required>
+                                <option value="" disabled selected>Select Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="year" class="form-label">Year</label>
+                            <input type="number" class="form-control" id="year" name="year" required min="2000" max="{{ current_year }}">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/charts.js' %}"></script>
+<script>
+    // Chart data
+    const ctx = document.getElementById('categoryChart').getContext('2d');
+    const data = {
+        labels: [{% for item in category_percentages %}"{{ item.category }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for item in category_percentages %}{{ item.percentage }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#8E44AD', '#27AE60'],
+        }]
+    };
+    new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,111 @@
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-dark">Ticket List</h2>
+        <!-- Search Filter -->
+        <input id="search-input" type="text" class="form-control w-25" placeholder="Search tickets...">
+    </div>
+
+    <!-- Ticket Table -->
+    <table class="table table-sm table-bordered">
+        <thead class="bg-dark text-light h5" style="font-size: 0.85rem;"> <!-- Reduced font size -->
+            <tr>
+                <th>Ticket Number</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Employee Name</th>
+                <th>Department</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Resolution Date</th>
+                <th>Resolution Notes</th>
+                <th>Follow-up Status</th>
+                <th>Technician</th>
+                <th>Attachment</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="ticket-tbody" style="font-size:  0.75rem;"> <!-- Reduced font size -->
+            {% for ticket in tickets %}
+            <tr class="ticket-row">
+                <td>{{ ticket.ticket_number }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.user.employee_name }}</td>
+                <td>{{ ticket.user.department }}</td>
+                <td>{{ ticket.priority }}</td>
+                <td>{{ ticket.due_date|date:"Y-m-d H:i" }}</td>
+                <td>{{ ticket.resolution_date|date:"Y-m-d H:i" }}</td>
+                <td>{{ ticket.resolution_notes }}</td>
+                <td>
+                    {% if ticket.follow_up %}
+                    <span class="badge bg-success">Follow-up Required</span>
+                    {% else %}
+                    <span class="badge bg-secondary">No Follow-up</span>
+                    {% endif %}
+                </td>
+                <td>{{ ticket.doneby }}</td>
+                <td>
+                    {% if ticket.attachment %}
+                    <a href="{% url 'tickets:download_attachment' ticket.pk %}" target="_blank">View Attachment</a>
+                    {% else %}
+                    No Attachment
+                    {% endif %}
+                </td>
+                <td>{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if ticket.status == 'Open' %}
+                    <span class="badge bg-primary">{{ ticket.status }}</span>
+                    {% else %}
+                    <span class="badge bg-success">{{ ticket.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Ticket Actions">
+                        <a href="{% url 'tickets:ticket_detail' ticket.pk %}" class="btn btn-sm btn-info" title="View Ticket">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        {% if request.user.is_staff and ticket.status == 'Open' %}
+                        <a href="{% url 'tickets:sign_ticket' ticket.pk %}" class="btn btn-sm btn-success" title="Sign Ticket">
+                            <i class="fas fa-signature"></i>
+                        </a>
+                        {% endif %}
+                        {% if ticket.status == 'Open' %}
+                        <a href="{% url 'tickets:update_item_url' ticket.id %}" class="btn btn-sm btn-warning" title="Update Ticket">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        {% endif %}
+                        {% if request.user.is_staff or ticket.status == 'Open' %}
+                        <a href="{% url 'tickets:delete_item_url' ticket.id %}" class="btn btn-sm btn-danger" title="Delete Ticket">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Search function to filter tickets based on input
+    document.getElementById('search-input').addEventListener('input', function () {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#ticket-tbody .ticket-row');
+
+        rows.forEach(function (row) {
+            var title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+            var description = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+            var employeeName = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
+            var department = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
+
+            if (title.includes(searchValue) || description.includes(searchValue) || employeeName.includes(searchValue) || department.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

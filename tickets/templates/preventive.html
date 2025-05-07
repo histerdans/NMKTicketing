@@ -1,0 +1,167 @@
+{% extends 'main_base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Page Title -->
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h2 class="display-6">Preventive Maintenance</h2>
+            <p class="text-muted">Fill in the details to complete the preventive maintenance record.</p>
+        </div>
+    </div>
+
+  
+
+    <!-- Display form validation errors -->
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please correct the errors below:</strong>
+        <ul>
+            {% for field in form %}
+            {% if field.errors %}
+            <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+            {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Form Starts Here -->
+    <form method="post" class="card shadow-lg p-4 border-0">
+        {% csrf_token %}
+        <h4 class="mb-3">Antivirus Details</h4>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="antivirus_key" class="form-label">{{ form.antivirus_key.label_tag }}</label>
+                {{ form.antivirus_key }}
+            </div>
+        </div>
+        <!-- Message Area -->
+        <div id="antivirus-message" class="alert alert-warning d-none" role="alert">
+            <p>This is empty because you have already activated and subscribed to your allocated NMK antivirus key. Kindly conduct ICT Department for inquiries.               
+            </p> 
+            <button type="button" class="btn btn-secondary" onclick="window.history.back();">Close</button>
+        </div>
+
+        <hr class="my-4">
+        <h4 class="mb-3">Machine Details</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="department" class="form-label">{{ form.department.label_tag }}</label>
+                {{ form.department }}
+            </div>
+            <div class="col-md-4">
+                <label for="machine_type" class="form-label">{{ form.machine_type.label_tag }}</label>
+                {{ form.machine_type }}
+            </div>
+            <div class="col-md-4">
+                <label for="computer_name" class="form-label">{{ form.computer_name.label_tag }}</label>
+                {{ form.computer_name }}
+            </div>
+        </div>
+        
+        <div class="row g-3 mt-3">
+            <div class="col-md-4">
+                <label for="ipaddress" class="form-label">{{ form.ipaddress.label_tag }}</label>
+                {{ form.ipaddress }}
+            </div>
+            <div class="col-md-4">
+                <label for="cpu_serial_no" class="form-label">{{ form.cpu_serial_no.label_tag }}</label>
+                {{ form.cpu_serial_no }}
+            </div>
+            <div class="col-md-4">
+                <label for="monitor_serial_no" class="form-label">{{ form.monitor_serial_no.label_tag }}</label>
+                {{ form.monitor_serial_no }}
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-4">
+                <label for="keyboard_serial_no" class="form-label">{{ form.keyboard_serial_no.label_tag }}</label>
+                {{ form.keyboard_serial_no }}
+            </div>
+            <div class="col-md-4">
+                <label for="mouse_serial_no" class="form-label">{{ form.mouse_serial_no.label_tag }}</label>
+                {{ form.mouse_serial_no }}
+            </div>
+            <div class="col-md-4">
+                <label for="printer_serial_no" class="form-label">{{ form.printer_serial_no.label_tag }}</label>
+                {{ form.printer_serial_no }}
+            </div>
+        </div>
+
+        <hr class="my-4">
+        <h4 class="mb-3">System Configuration</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="ram" class="form-label">{{ form.ram.label_tag }}</label>
+                {{ form.ram }}
+            </div>
+            <div class="col-md-4">
+                <label for="hdd" class="form-label">{{ form.hdd.label_tag }}</label>
+                {{ form.hdd }}
+            </div>
+            <div class="col-md-4">
+                <label for="processor" class="form-label">{{ form.processor.label_tag }}</label>
+                {{ form.processor }}
+            </div>
+        </div>
+
+        <hr class="my-4">
+        <h4 class="mb-3">Additional Information</h4>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="follow_up" class="form-label">Follow-up</label>
+                {{ form.follow_up }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="supervisor" class="form-label">{{ form.supervisor.label_tag }}</label>
+                {{ form.supervisor }}
+            </div>
+            <div class="col-md-6">
+                <label for="remarks" class="form-label">{{ form.remarks.label_tag }}</label>
+                {{ form.remarks }}
+            </div>
+        </div>
+
+
+        <!-- Form Buttons -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div>
+                
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'tickets:maintenance_history' %}';">Cancel</button>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const antivirusSelect = document.querySelector('#id_antivirus_key'); // Change this to match your actual input ID
+        const messageDiv = document.getElementById('antivirus-message');
+
+        // Function to check the antivirus key selection
+        function checkAntivirusKey() {
+            if (antivirusSelect.value === '') {
+                messageDiv.classList.remove('d-none'); // Show message
+            } else {
+                messageDiv.classList.add('d-none'); // Hide message
+            }
+        }
+
+        // Add event listener for change event
+        antivirusSelect.addEventListener('change', checkAntivirusKey);
+
+        // Initial check in case the field is already empty on page load
+        checkAntivirusKey();
+    });
+</script>
+{% endblock %}

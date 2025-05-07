@@ -1,0 +1,45 @@
+
+{% extends 'main_base.html' %}
+
+{% block content %}
+
+{%load static %}
+{% load crispy_forms_tags %}
+
+<div class="container-md list-group-item-info">
+    <h3>Update Ticket</h3>
+    <form action="{% url 'tickets:update_item_url' tickets.id %}" class="row g-4" method="POST" id="countdown-form" >
+        {% csrf_token %}<!-- Display form validation errors -->
+       
+        {{form|crispy}}
+       
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit"><i class="icon-envelop  bigger-1550"> </i>Send</button>
+        </div>
+        <a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary px-5"><i class="icon-undo"></i> Cancel</a>
+        <!--Display success messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div style="color: green;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %} 
+        {% if form.errors %}
+        <div style="color: red;">
+            <strong>Please correct the errors below:</strong>
+            <ul>
+                {% for field in form %}
+                {% if field.errors %}
+                <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </form>
+</div>
+<!--PAGE CONTENT ENDS-->
+
+
+{% endblock %}

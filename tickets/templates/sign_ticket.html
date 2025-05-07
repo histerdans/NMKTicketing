@@ -1,0 +1,57 @@
+{% extends 'main_base.html' %}
+
+{% block content %}
+<div class="container-md p-4 bg-light rounded shadow-sm">
+  <h1 class="text-center mb-4">Sign Ticket</h1>
+  {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please correct the errors below:</strong>
+        <ul>
+            {% for field in form %}
+                {% if field.errors %}
+                <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+  {% endif %}
+  <form class="row g-4" method="post">
+    {% csrf_token %}
+
+    <!-- User Signature -->
+    <div class="col-12 p-3 border rounded mb-3">
+      <label class="form-label" for="user_signature">User Signature:</label>
+      <canvas class="form-control mb-3" id="user_signature_pad" width="500" height="200" style="border: 1px solid black;"></canvas>
+      <input type="hidden" name="user_signature" id="user_signature_input">
+      <button class="btn btn-warning" type="button" onclick="clearSignature('user_signature_pad', userSignaturePad)">Clear User Signature</button>
+    </div>
+
+    <!-- ICT Technician Signature -->
+    <div class="col-12 p-3 border rounded mb-3">
+      <label class="form-label" for="technician_signature">ICT Technician Signature:</label>
+      <canvas class="form-control mb-3" id="technician_signature_pad" width="500" height="200" style="border: 1px solid black;"></canvas>
+      <input type="hidden" name="technician_signature" id="technician_signature_input">
+      <button class="btn btn-warning" type="button" onclick="clearSignature('technician_signature_pad', technicianSignaturePad)">Clear Technician Signature</button>
+    </div>
+
+    <!-- Remarks -->
+    <div class="col-12 p-3 border rounded mb-3">
+      <label for="remarks" class="form-label">Remarks:</label>
+      <textarea name="remarks" id="remarks" class="form-control" rows="3" placeholder="Add your remarks here..."></textarea>
+    </div>
+
+    <!-- Follow Up -->
+    <div class="col-12 p-3 border rounded mb-3">
+      <label for="follow_up" class="form-label">Follow Up Needed:</label>
+      {{form.follow_up}}
+      <label class="form-check-label" for="follow_up">Check if follow-up is required</label>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-12 text-center">
+      <button class="btn btn-primary px-5" type="submit"><i class="icon-check"></i> Sign Ticket</button>
+      <a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary px-5"><i class="icon-undo"></i> Back</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

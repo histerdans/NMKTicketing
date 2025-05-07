@@ -1,0 +1,236 @@
+
+
+/* Customize the navbar */
+/* Add hover effect for the links */
+.navbar-nav .nav-link:hover {
+    color: orange;
+    transition: color 0.3s ease;
+}
+
+/* Illuminating effect for the logo on hover */
+.navbar-brand:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 165, 0, 1));
+}
+/* Transparent navbar background */
+.navbar {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Change navbar background on scroll */
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Hover effect on nav links */
+.nav-hover:hover {
+    color: #ff4d4d !important; /* Change text color on hover */
+    transition: color 0.3s ease;
+}
+
+/* Glow effect for logo */
+.logo-glow {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Increase glow on hover */
+.logo-glow:hover {
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+}
+
+/* Container for the logo */
+.logo-container {
+  margin-right: auto; /* Push the logo to the left */
+}
+
+
+
+/* Enhance the team section styles */
+#ourteam .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect to lift the card */
+#ourteam .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Circle image with zoom effect */
+.card-img-wrapper {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 50%;
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card-img-wrapper:hover .card-img-top {
+    transform: scale(1.1);
+}
+
+/* Title and text adjustments */
+.card-text {
+    font-size: 1rem;
+    color: #777;
+}
+.card-title {
+    font-size: 1rem;
+    color: #777;
+}
+
+
+
+/* Form input fields and button styling */
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: none;
+    border-color: #6200EE;
+    box-shadow: 0 0 5px rgba(98, 0, 238, 0.4);
+}
+
+button[type="submit"] {
+    background-color: #6200EE;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #5e00d9;
+}
+
+.spinner-border {
+    display: none; /* Initially hidden */
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    position: relative;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Loading spinner style */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Custom header styling */
+.custom-header {
+  background-color: transparent; /* Optional if you need transparency */
+  border-bottom: 2px solid #ccc; /* Light border */
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: transparent !important;
+}
+
+/* Nav links styling */
+.nav-links-container .nav-link {
+  background-color: rgba(255, 165, 0, 0.2); /* Orange transparent background */
+  
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links-container .nav-link:hover {
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+}
+
+/* For small screens */
+.navbar-toggler {
+  border-color: #FFA500;/* Orange border for the toggle */
+
+}
+
+/* Align navbar content */
+.nav-links-container {
+  display: flex;
+  justify-content: flex-end; /* Push nav links to the right */
+  align-items: center;
+
+
+
+/* Add hover effect for the buttons */
+.btn-primary:hover {
+  background-color: #007bff;
+  border-color: #0056b3;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.content-container {
+    background: rgba(255, 255, 255, 0.85); /* Transparent background for readability */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+.helpdesk-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .welcome-section, .image-section, .steps-section {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .image-section img {
+    opacity: 0.7;
+  }
+
+  .steps-section ul {
+    text-align: left;
+  }
+
+  .steps-section li {
+    margin-bottom: 10px;
+  }
+

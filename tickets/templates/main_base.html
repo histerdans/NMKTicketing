@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="User Dashboard page" name="description"/>
+    <title> ICT User Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <!-- <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>-->
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/stamp.png' %}">
+    <!-- Stylesheet -->
+    <h1>
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+      </div>
+  </h1>
+  <style type="text/css">
+     .navbar-nav .nav-link:hover {
+        color: orange;
+        transition: color 0.3s ease;
+    }
+
+/* Illuminating effect for the logo on hover */
+.navbar-brand:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 165, 0, 1));
+}
+/* Transparent navbar background */
+.navbar {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Change navbar background on scroll */
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Hover effect on nav links */
+.nav-hover:hover {
+    color: #ff4d4d !important; /* Change text color on hover */
+    transition: color 0.3s ease;
+}
+
+/* Glow effect for logo */
+.logo-glow {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Increase glow on hover */
+.logo-glow:hover {
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+}
+
+/* Container for the logo */
+.logo-container {
+  margin-right: auto; /* Push the logo to the left */
+}
+</style>
+
+
+
+
+<!-- Custom styles for this template -->
+</head>
+<body class="align-items-center">
+
+  <main>
+
+      <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
+        <div class="container-fluid navbar navbar-expand-lg"> 
+            <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
+                <!-- Logo aligned to the left -->
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'img/nmklogo.png' %}" width="220" height="60" alt="Home" class="d-inline-block align-text-top logo-glow">
+                </a>
+
+                <button class="navbar-toggler navbar-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div style="border-radius: 15px; background-color:#ce9d69;" class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a style="border-radius: 15px;" class="nav-link px-4 link-dark btn-outline-info me-2 nav-custom" 
+           href="{% if request.user.is_staff %}{% url 'tickets:ict_dashboard' %}{% else %}/{% endif %}">
+           <i class="fas fa-home"></i> Home
+        </a>
+    </li>
+    {% if request.user.is_staff %}
+    <li class="nav-item">
+        <a style="border-radius: 15px;" class="nav-link px-4 link-dark btn-outline-info me-2 nav-custom" 
+           href="{% url 'tickets:staff_dashboard' user_id=request.user.id %}">
+           <i class="fas fa-user-shield"></i> My Dashboard
+        </a>
+    </li>
+    {% endif %}
+    
+    <li class="nav-item">
+        <a style="border-radius: 15px;" class="nav-link px-4 link-dark btn-outline-info me-2 nav-custom" 
+           href="{% url 'tickets:ticket_create' %}">
+           <i class="fas fa-plus-circle"></i> New Ticket
+        </a>
+    </li>
+ <li class="nav-item">
+        {% if request.user.is_staff %}
+            <a style="border-radius: 15px;" class="nav-link px-4 link-dark btn-outline-info me-2 nav-custom" 
+               href="{% url 'tickets:ticket_list' %}">
+               <i class="fas fa-list"></i> Raised Tickets
+            </a>
+        {% else %}
+            <a style="border-radius: 15px;" class="nav-link px-4 link-dark btn-outline-info me-2 nav-custom" 
+               href="{% url 'tickets:ticket_list' %}">
+               <i class="fas fa-list"></i> My Ticket History
+            </a>
+        {% endif %}
+    </li>
+</ul>
+
+<div class="nav-link dropdown text-end">
+    <a style="border-radius: 15px;" class="d-block link-dark text-decoration-none dropdown-toggle btn-outline-info me-2" 
+       data-bs-toggle="dropdown" href="#" id="dropdownUser1">
+        <img alt="user" class="rounded-circle" height="32" src="{% static 'avatars/user.png' %}" width="32">
+        <span class="user-info"><small>Welcome,</small> {{ request.user }}</span>
+    </a>
+    <ul aria-labelledby="dropdownUser1" class="dropdown-menu text-small">
+        <li>
+            <a class="dropdown-item" href="{% url 'accounts:url_profile' user.id %}">
+                Profile <i class="fas fa-user"></i>
+            </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                Sign out <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </li>
+    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="b-example-divider"></div>
+<div class="container-fluid d-flex">
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Modal for Logout End -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout???
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'accounts:logout' %}"><button type="button" class="btn btn-danger">Logout</button></a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this ticket?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="deleteConfirmBtn" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="text-dark text-center py-3 container-fluid" style="background-color:#ce9d69;margin-top: 20px;">
+  <p class="mb-0">&copy; 2024 <i class="icon-bell"></i> ICT Ticketing System NMK. All Rights Reserved.</p>
+</footer>
+</main>
+
+<!-- JavaScript -->
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/signature_pad.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+
+
+<script>
+    // Replace with your actual loading logic to remove the spinner
+    window.onload = function() {
+        document.querySelector('.spinner-border').remove();
+    }
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{% static "js/service-worker.js" %}').then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+        }).catch(function(error) {
+            console.log('Service Worker registration failed:', error);
+        });
+    }
+
+    // Resize Canvas
+    function resizeCanvas(canvas) {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext('2d').scale(ratio, ratio);
+    }
+
+    // Signature Pad Setup for both User and Technician
+    var userCanvas = document.getElementById('user_signature_pad');
+    var technicianCanvas = document.getElementById('technician_signature_pad');
+    resizeCanvas(userCanvas);
+    resizeCanvas(technicianCanvas);
+
+    var userSignaturePad = new SignaturePad(userCanvas, {
+        minWidth: 1,
+        maxWidth: 2.5,
+        penColor: "black",
+        backgroundColor: "white"
+    });
+
+    var technicianSignaturePad = new SignaturePad(technicianCanvas, {
+        minWidth: 1,
+        maxWidth: 2.5,
+        penColor: "black",
+        backgroundColor: "white"
+    });
+
+    // Function to clear the signature
+    function clearSignature(canvasId, signaturePad) {
+        signaturePad.clear();
+    }
+
+    // Capture signature data when form is submitted
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (!userSignaturePad.isEmpty()) {
+            document.getElementById('user_signature_input').value = userSignaturePad.toDataURL();
+        } else {
+            alert("User signature is required.");
+            e.preventDefault();
+        }
+
+        if (!technicianSignaturePad.isEmpty()) {
+            document.getElementById('technician_signature_input').value = technicianSignaturePad.toDataURL();
+        } else {
+            alert("Technician signature is required.");
+            e.preventDefault();
+        }
+
+        if (!navigator.onLine) {
+            localStorage.setItem('offline_signature_data', JSON.stringify({
+                user_signature: userSignaturePad.toDataURL(),
+                ict_signature: technicianSignaturePad.toDataURL(),
+                ticket_id: document.querySelector('form').dataset.ticketId
+            }));
+            alert('You are offline. Your signature will be synced when you are back online.');
+            e.preventDefault();
+        }
+    });
+
+    window.addEventListener('online', () => {
+        const offlineData = JSON.parse(localStorage.getItem('offline_signature_data'));
+        if (offlineData) {
+            fetch(`/tickets/${offlineData.ticket_id}/sign/`, {
+                method: 'POST',
+                body: new URLSearchParams(offlineData),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            }).then(response => {
+                if (response.ok) {
+                    localStorage.removeItem('offline_signature_data');
+                    alert('Offline signature synced successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Failed to sync offline signature.');
+                }
+            });
+        }
+    });
+
+    // Disable right-click context menu and certain key combinations (like Print Screen)
+    document.getElementById('.sign_pad').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+    document.getElementById('.sign_pad').addEventListener('keydown', function(e) {
+        if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 's')) {
+            e.preventDefault();
+            alert("Screenshot and saving are disabled.");
+        }
+    });
+
+    // Setup for signature pads
+    function setupSignaturePad(canvasId, watermarkImg) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext('2d');
+
+        const watermark = new Image();
+        watermark.src = "{% static 'img/newlogo.png' %}";
+        watermark.onload = function () {
+            ctx.drawImage(watermark, canvas.width - 5, canvas.height - 5, 8, 4);
+        };
+
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+        var deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
+
+        confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var ticketUrl = button.getAttribute('data-ticket-url');
+            deleteConfirmBtn.setAttribute('href', ticketUrl);
+        });
+
+        // Search function to filter tickets based on input
+        document.getElementById('search-input').addEventListener('input', function () {
+            var searchValue = this.value.toLowerCase();
+            var rows = document.querySelectorAll('#ticket-tbody .ticket-row');
+            
+            rows.forEach(function (row) {
+                var title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                var description = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+                var employeeName = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
+                var department = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || description.includes(searchValue) || employeeName.includes(searchValue) || department.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

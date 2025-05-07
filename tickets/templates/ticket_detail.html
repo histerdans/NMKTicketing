@@ -1,0 +1,78 @@
+{% extends 'main_base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid sign_pad" id="ticket-details" style="position: relative; max-width: 800px; margin: 0 auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); overflow: hidden;">
+  <!-- Background Image with Opacity Overlay -->
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('{% static 'img/background.jpg' %}') no-repeat center center; background-size: cover; opacity: 0.3; z-index: -1;"></div>
+  
+  <!-- Content -->
+  <div style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h1 style="font-size: 2.5rem; text-align: center; color: #333; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">Ticket Details</h1>
+    
+    <h2 style="font-size: 1.8rem; color: #2f2601; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">{{ ticket.title }}</h2>
+    <h3 style="font-size: 1.8rem; color: #2f2601; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">{{ ticket.ticket_number }}</h3>
+    <p style="font-size: 1.1rem; color: #333; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 5px;">
+      {{ ticket.description }}
+    </p>
+    
+    <p style="font-weight: bold; font-size: 1.2rem; color: {% if ticket.status == 'closed' %}#28a745{% else %}#dc3545{% endif %};">
+      Ticket Status: {{ ticket.status }}
+    </p>
+
+    <p style="font-weight: bold; font-size: 1.2rem;">
+      Resolution Date: 
+      {% if ticket.resolution_date %}
+        {{ ticket.resolution_date|date:"F j, Y, g:i a" }}
+      {% else %}
+        <span class="text-muted">Not resolved yet</span>
+      {% endif %}
+    </p>
+    <p style="font-weight: bold; font-size: 1.2rem;">
+      Follow-Up Status: 
+      {% if ticket.follow_up %}
+        <span class="badge bg-success">Follow-Up Needed</span>
+      {% else %}
+        <span class="badge bg-secondary">No Follow-Up Needed</span>
+      {% endif %}
+    </p>
+    
+    {% if request.user.is_staff and ticket.status == 'open' %}
+      <a href="{% url 'tickets:sign_ticket' ticket.pk %}" class="btn btn-primary" style="margin-top: 20px; background-color: #007bff; border: none; padding: 10px 20px; border-radius: 5px; color: #fff; text-decoration: none;">Sign Ticket</a>
+    {% else %}
+      <h3 style="font-size: 1.5rem; margin-top: 20px; color: #333;">Signatures</h3>
+
+      <div style="margin-bottom: 20px; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 5px;">
+        <p style="font-size: 1.2rem; color: #2f2601;">User Signature:</p>
+        {% if signature and signature.user_signature %}
+          <img src="{{ signature.user_signature }}" alt="User Signature" style="border: 2px solid #fff; padding: 10px; width: 100%; max-width: 300px; border-radius: 5px;">
+        {% else %}
+          <p style="color: #999;">No user signature available.</p>
+        {% endif %}
+      </div>
+
+      <div style="margin-bottom: 20px; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 5px;">
+        <p style="font-size: 1.2rem; color: #2f2601;">Technician Signature:</p>
+        {% if signature and signature.technician_signature %}
+          <img src="{{ signature.technician_signature }}" alt="Technician Signature" style="border: 2px solid #fff; padding: 10px; width: 100%; max-width: 300px; border-radius: 5px;">
+        {% else %}
+          <p style="color: #999;">No technician signature available.</p>
+        {% endif %}
+      </div>
+      
+      <!-- Remarks Section -->
+      <div style="margin-bottom: 20px; background-color: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 5px;">
+        <p style="font-size: 1.2rem; font-weight: bold; color: #2f2601;">Remarks:</p>
+        {% if signature.remarks %}
+          <p style="background-color: #e0e0e0; padding: 10px; border-radius: 5px; color: #333;">{{ signature.remarks }}</p>
+        {% else %}
+          <p style="color: #999;">No remarks available.</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary px-5" style="margin-top: 20px;"><i class="icon-undo"></i>Back</a>
+  </div>
+</div>
+{% endblock %}

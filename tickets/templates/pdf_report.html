@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Report for {{ selected_month }}/{{ selected_year }}</title>
+</head>
+<body>
+    <h2>Ticket Report for {{ selected_month }}/{{ selected_year }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket Number</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Closed By</th>
+                <th>Resolution Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.ticket_number }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.doneby }}</td>
+                <td>{{ ticket.updated_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

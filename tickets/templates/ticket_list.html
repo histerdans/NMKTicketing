@@ -1,0 +1,46 @@
+{% extends 'main_base.html' %}
+
+{% block content %}
+<style>
+    .progress-bar {
+        transition: width 1s;
+    }
+</style>
+
+<div class="container-fluid">
+       <div class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+        <div style='color: {% if message.tags == "error" %}red{% elif message.tags == "success" %}green{% else %}black{% endif %};'>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+   <div>
+    {% if not request.user.is_staff %}
+        <a href="{% url 'tickets:ticket_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create Ticket
+        </a>
+    {% endif %}
+</div>
+    <!-- Table Container for updating via AJAX -->
+    <div id="tickets-table">
+        {% include 'tickets_table.html' %}
+    </div>
+</div>
+<script>
+    function refreshTable() {
+        fetch("{% url 'tickets:ticket_list_partial' %}") // This should return the 'tickets_table.html' partial view
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('tickets-table').innerHTML = data;
+            })
+            .catch(error => console.log('Error refreshing table:', error));
+    }
+
+    // Set interval to refresh every 1 minute (60000 milliseconds)
+    setInterval(refreshTable, 60000);
+</script>
+{% endblock %}

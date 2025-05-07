@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {%load static %}
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/intlTelInput.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/stamp.png' %}">
+    <link href="{% static 'css/styles_login.css' %}" rel="stylesheet"/>
+    <style>
+        #home {
+          background-image: url("{% static 'img/background.jpg' %}");
+          background-size: cover;
+          background-position: center;
+          color: white;
+          padding: 100px 0;
+          text-align: center;
+      }
+
+
+      body {
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.6), 
+            rgba(0, 0, 0, 0.6)
+        ), url("{% static 'img/background.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<title>Ticketing User Accounts</title>
+
+</head>
+
+<body>
+    <!-- Loading Spinner -->
+    <h1>
+        <div class="spinner-border text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </h1>
+
+    <!-- Content -->
+    <div class="content-container  row " >
+       {% block content %}
+      {% endblock %}
+      <!-- Footer -->
+
+  </div>
+  
+  
+  <!-- Scripts -->
+  <!-- Spinner and Phone Number Validation Scripts -->
+  <script>
+    // Spinner removal after page load
+    window.onload = function() {
+        document.querySelector('.spinner-border').remove();
+    }
+
+    // jQuery Phone Number Validation
+    $(document).ready(function () {
+        $('#phoneForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var phoneNumber = $('#id_phone_number').val();
+            var phonePattern = /^[0-9]{10}$/; // A simple 10-digit phone number validation
+
+            if (phonePattern.test(phoneNumber)) {
+                $('#id_phone_number').removeClass('is-invalid');
+                alert("Phone number is valid");
+                // Proceed with form submission or additional actions
+            } else {
+                $('#id_phone_number').addClass('is-invalid');
+            }
+        });
+    });
+</script>
+
+<!-- jQuery inclusion -->
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+</body>
+</html>
